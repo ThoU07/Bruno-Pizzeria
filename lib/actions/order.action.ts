@@ -184,6 +184,7 @@ export const getOrderByUserId = async (userId: string): Promise<IOrder[]> => {
 			$createdAt: order.$createdAt,
 			$updatedAt: order.$updatedAt,
 			name: order.name,
+			users: order.users
 		}));
 	} catch (error) {
 		console.error('Error getting order:', error);

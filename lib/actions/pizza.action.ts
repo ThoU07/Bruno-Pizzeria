@@ -315,6 +315,8 @@ export const createCustomPizza = async (
 			finalPrice: fullPrice,
 			paymentStatus: EPaymentStatus.UNPAID,
 			status: EOrderStatus.PENDING,
+			// @ts-expect-error refact
+			users: user.$id
 		};
 
 		const order = await databases.createDocument(

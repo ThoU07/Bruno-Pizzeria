@@ -251,20 +251,24 @@ export default function CartList() {
         </div>
         {deliveryType === EDeliveryType.SHIP && (
           <div className="justify-between flex items-center gap-2">
+            <p className="text-red font-bold">*</p>
             <span className="font-semibold">Address: </span>
             <Input
               className="flex-1"
               value={deliveryAddress}
               onChange={(e) => setAddress(e.target.value)}
+              required
             />
           </div>
         )}
         <div className="justify-between flex items-center gap-2">
+          <p className="text-red font-bold">*</p>
           <span className="font-semibold">Phone Number: </span>
           <Input
             className="flex-1"
             value={phoneNumber}
             onChange={(e) => handlePhoneChange(e.target.value)}
+            required
           />
         </div>
         <div className="justify-between flex items-center gap-2">

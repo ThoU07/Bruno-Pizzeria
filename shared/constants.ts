@@ -24,7 +24,7 @@ export const ROUTES = [
 		href: '/pizza-builder',
 	},
 	{
-		label: 'About Bruno',
+		label: 'About',
 		href: '/about',
 	},
 ];

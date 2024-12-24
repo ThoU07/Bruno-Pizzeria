@@ -54,9 +54,9 @@ export default function PizzaDetail({ pizza }: Props) {
     };
 
     addItem(finalPizza);
-    toast.success("Đã thêm vào giỏ hàng", {
+    toast.success("Added to Cart", {
       action: {
-        label: "Đến giỏ hàng",
+        label: "To Cart",
         onClick: () => router.push("/cart"),
       },
       actionButtonStyle: {
@@ -70,7 +70,7 @@ export default function PizzaDetail({ pizza }: Props) {
       <div>
         <Link href="/menu">
           <Button variant="ghost" className="mb-4">
-            <ChevronLeft /> Quay lại
+            <ChevronLeft /> Back
           </Button>
         </Link>
       </div>
@@ -96,14 +96,14 @@ export default function PizzaDetail({ pizza }: Props) {
               Delicious <span className="text-brand">{pizza.name}</span>
             </CardTitle>
             <CardDescription className="">
-              Thông tin thêm: {pizza.description}
+              More information: {pizza.description}
             </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-6">
             {/* Size Selection */}
             <div>
-              <h3 className="text-lg font-semibold mb-3">Kích thước</h3>
+              <h3 className="text-lg font-semibold mb-3">Size</h3>
               <SelectSize
                 sizes={pizza.sizes}
                 onChange={setSelectedSize}
@@ -126,7 +126,7 @@ export default function PizzaDetail({ pizza }: Props) {
 
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-xl font-bold">
-              Tổng tiền: {finalPrice.toLocaleString()}
+              Total: {finalPrice.toLocaleString()}
               {currency}
             </div>
             <Button
@@ -134,7 +134,7 @@ export default function PizzaDetail({ pizza }: Props) {
               size="lg"
               onClick={handleAddToCart}
             >
-              Thêm vào giỏ hàng
+              Add to Cart
             </Button>
           </CardFooter>
         </Card>

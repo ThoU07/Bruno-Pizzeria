@@ -6,7 +6,7 @@ export const currency = 'VND';
 export const PHONE_CONTACT = '0362555555'
 export const DEFAULT_IMAGE =
 	'/assets/images/photo-1628840042765-356cda07504e.png';
-export const CATEGORY_CUSTOM = `674f220f003d32a2eb19`
+export const CATEGORY_CUSTOM = `6775102d0018da09c89c`
 export const SIZE_CUSTOM = `674f21ac000b46e1c01c`
 export const DEFAULT_CUSTOM_PRICE = 150000
 

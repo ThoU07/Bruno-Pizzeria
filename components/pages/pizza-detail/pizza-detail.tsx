@@ -27,7 +27,7 @@ interface Props {
 }
 
 export default function PizzaDetail({ pizza }: Props) {
-  const isCustom = pizza.sizes[0].name === "Custom";
+  const isCustom = pizza.sizes[0].name.toLowerCase() === "custom";
   const [selectedSize, setSelectedSize] = useState<IPizzaSize>(pizza.sizes[0]);
   const [toppingSelected, setToppingSelected] = useState<ITopping[]>(
     isCustom ? pizza.toppings : []

@@ -37,7 +37,8 @@ export default function Page() {
                   <div className="flex gap-4 mt-6">
                     <Link
                       className="hover:scale-110 text-gray-500 hover:text-brand transition-colors"
-                      href="#"
+                      href="https://www.facebook.com/tbiumm/"
+                      target="_blank"
                     >
                       <img
                         src="/assets/icons/facebook.svg"
@@ -47,7 +48,7 @@ export default function Page() {
                     </Link>
                     <Link
                       className="hover:scale-110 text-gray-500 hover:text-brand transition-colors"
-                      href="#"
+                      href="https://www.instagram.com/_l.trngh0730/"
                     >
                       <img
                         src="/assets/icons/instagram.svg"
@@ -57,7 +58,7 @@ export default function Page() {
                     </Link>
                     <Link
                       className="hover:scale-110 text-gray-500 hover:text-brand transition-colors"
-                      href="#"
+                      href="https://www.youtube.com/@nghialetrung9219"
                     >
                       <img
                         src="/assets/icons/youtube.svg"

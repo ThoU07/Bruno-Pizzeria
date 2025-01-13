@@ -49,6 +49,7 @@ export default function Page() {
                     <Link
                       className="hover:scale-110 text-gray-500 hover:text-brand transition-colors"
                       href="https://www.instagram.com/_l.trngh0730/"
+                      target="_blank"
                     >
                       <img
                         src="/assets/icons/instagram.svg"
@@ -59,6 +60,7 @@ export default function Page() {
                     <Link
                       className="hover:scale-110 text-gray-500 hover:text-brand transition-colors"
                       href="https://www.youtube.com/@nghialetrung9219"
+                      target="_blank"
                     >
                       <img
                         src="/assets/icons/youtube.svg"

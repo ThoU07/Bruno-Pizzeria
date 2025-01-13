@@ -25,7 +25,7 @@ export default function CartItem({ item }: Props) {
     updateItemQuantity(item, item.quantity - 1);
   };
 
-  // const handleRemoveToping = (item: StoreCartItem, topping: ITopping) => {
+  // const handleRemoveTopping = (item: StoreCartItem, topping: ITopping) => {
   // 	if (isCustom) return;
   // 	const newToppings = item.selectedToppings.filter(
   // 		(t) => t.$id !== topping.$id

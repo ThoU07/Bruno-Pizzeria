@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import * as React from "react";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
-	ChartConfig,
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent,
-} from '@/components/ui/chart';
-import { getChartData } from '@/lib/actions/dashboard.action';
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { getChartData } from "@/lib/actions/dashboard.action";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { ChevronDown, Loader2, RefreshCcw } from 'lucide-react';
-import { Button } from '../ui/button';
-import { toast } from 'sonner';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { ChevronDown, Loader2, RefreshCcw } from "lucide-react";
+import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 // const initialChartData = [
 // 	{ date: '2024-04-01', price: 222 },
@@ -122,155 +122,156 @@ import { toast } from 'sonner';
 // ];
 
 const chartConfig = {
-	total: {
-		label: 'Value',
-	},
-	price: {
-		label: 'Price',
-		color: 'hsl(var(--chart-1))',
-	},
+  total: {
+    label: "Value",
+  },
+  price: {
+    label: "Price",
+    color: "hsl(var(--chart-1))",
+  },
 } satisfies ChartConfig;
 
 export default function AdminChart() {
-	const [chartData, setChartData] =
-		React.useState<{ date: string; price: number }[]>([]);
-	const [numberOfMonths, setNumberOfMonths] = React.useState(3);
-	const [loading, setLoading] = React.useState(false);
+  const [chartData, setChartData] = React.useState<
+    { date: string; price: number }[]
+  >([]);
+  const [numberOfMonths, setNumberOfMonths] = React.useState(3);
+  const [loading, setLoading] = React.useState(false);
 
-	const fetchData = async () => {
-		setLoading(true);
-		try {
-			const orders = await getChartData(numberOfMonths);
-			setChartData(orders);
-		} catch (error) {
-			console.log(error);
-			toast.error('Something went wrong to fetch chart data');
-		} finally {
-			setLoading(false);
-		}
-	};
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const orders = await getChartData(numberOfMonths);
+      setChartData(orders);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong to fetch chart data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-	React.useEffect(() => {
-		if (numberOfMonths) {
-			fetchData();
-			// toast.warning('Đang fake data chart');
-			return;
-		}
-	}, [numberOfMonths]);
+  React.useEffect(() => {
+    if (numberOfMonths) {
+      fetchData();
+      // toast.warning('Đang fake data chart');
+      return;
+    }
+  }, [numberOfMonths]);
 
-	const total = React.useMemo(
-		() => ({
-			price: chartData.reduce((acc, curr) => acc + curr.price, 0),
-		}),
-		[chartData]
-	);
+  const total = React.useMemo(
+    () => ({
+      price: chartData.reduce((acc, curr) => acc + curr.price, 0),
+    }),
+    [chartData]
+  );
 
-	return (
-		<Card>
-			<CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
-				<div className='flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6'>
-					<CardTitle>
-						Total revenue
-						<Button
-							variant={'outline'}
-							size={'sm'}
-							disabled={loading}
-							onClick={fetchData}
-							className='ml-2'
-						>
-							{loading ? (
-								<Loader2 className='animate-spin inline-block mr-2 size-4' />
-							) : (
-								<RefreshCcw className='size-4 inline-block' />
-							)}
-							Refresh
-						</Button>
-					</CardTitle>
-					<CardDescription>
-						Display revenue over {' '}
-						<DropdownMenu>
-							<DropdownMenuTrigger className='border rounded-sm px-0.5'>
-								{numberOfMonths} <ChevronDown className='inline-block size-4' />
-							</DropdownMenuTrigger>
-							<DropdownMenuContent>
-								{Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-									<DropdownMenuItem
-										key={month}
-										onClick={() => setNumberOfMonths(month)}
-									>
-										{month}
-									</DropdownMenuItem>
-								))}
-							</DropdownMenuContent>
-						</DropdownMenu>{' '}
-						months nearly
-					</CardDescription>
-				</div>
-				<div className='flex'>
-					<p className='relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-l sm:border-t-0 sm:px-8 sm:py-6'>
-						Revenue: {total.price.toLocaleString()} đ
-					</p>
-				</div>
-			</CardHeader>
-			<CardContent className='px-2 sm:p-6'>
-				{loading && (
-					<p className='text-center'>
-						<Loader2 className='inline-block mr-2' /> Fetching ...
-					</p>
-				)}
-				{!loading && chartData.length === 0 && (
-					<p className='text-center'>
-						Data is empty on {numberOfMonths} months nearly
-					</p>
-				)}
-				{!loading && chartData.length > 0 && (
-					<ChartContainer
-						config={chartConfig}
-						className='aspect-auto h-[250px] w-full'
-					>
-						<BarChart
-							accessibilityLayer
-							data={chartData}
-							margin={{
-								left: 12,
-								right: 12,
-							}}
-						>
-							<CartesianGrid vertical={false} />
-							<XAxis
-								dataKey='date'
-								tickLine={false}
-								axisLine={false}
-								tickMargin={8}
-								minTickGap={32}
-								tickFormatter={(value) => {
-									const date = new Date(value);
-									return date.toLocaleDateString('vi-VI', {
-										month: 'short',
-										day: 'numeric',
-									});
-								}}
-							/>
-							<ChartTooltip
-								content={
-									<ChartTooltipContent
-										className='w-[150px]'
-										nameKey='total'
-										labelFormatter={(value) => {
-											return new Date(value).toLocaleDateString('vi-VI', {
-												month: 'short',
-												day: 'numeric',
-												year: 'numeric',
-											});
-										}}
-									/>
-								}
-							/>
-							<Bar dataKey={'price'} fill={`var(--color-${'price'})`} />
-						</BarChart>
-					</ChartContainer>
-				)}
-			</CardContent>
-		</Card>
-	);
+  return (
+    <Card>
+      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
+        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+          <CardTitle>
+            Total revenue
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              disabled={loading}
+              onClick={fetchData}
+              className="ml-2"
+            >
+              {loading ? (
+                <Loader2 className="animate-spin inline-block mr-2 size-4" />
+              ) : (
+                <RefreshCcw className="size-4 inline-block" />
+              )}
+              Refresh
+            </Button>
+          </CardTitle>
+          <CardDescription>
+            Display revenue over{" "}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="border rounded-sm px-0.5">
+                {numberOfMonths} <ChevronDown className="inline-block size-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                  <DropdownMenuItem
+                    key={month}
+                    onClick={() => setNumberOfMonths(month)}
+                  >
+                    {month}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>{" "}
+            months nearly
+          </CardDescription>
+        </div>
+        <div className="flex">
+          <p className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-l sm:border-t-0 sm:px-8 sm:py-6">
+            Revenue: {total.price.toLocaleString()} đ
+          </p>
+        </div>
+      </CardHeader>
+      <CardContent className="px-2 sm:p-6">
+        {loading && (
+          <p className="text-center">
+            <Loader2 className="inline-block mr-2" /> Fetching ...
+          </p>
+        )}
+        {!loading && chartData.length === 0 && (
+          <p className="text-center">
+            Data is empty on {numberOfMonths} months nearly
+          </p>
+        )}
+        {!loading && chartData.length > 0 && (
+          <ChartContainer
+            config={chartConfig}
+            className="aspect-auto h-[250px] w-full"
+          >
+            <BarChart
+              accessibilityLayer
+              data={chartData}
+              margin={{
+                left: 12,
+                right: 12,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                minTickGap={32}
+                tickFormatter={(value) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString("vi-VI", {
+                    month: "short",
+                    day: "numeric",
+                  });
+                }}
+              />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[150px]"
+                    nameKey="total"
+                    labelFormatter={(value) => {
+                      return new Date(value).toLocaleDateString("vi-VI", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      });
+                    }}
+                  />
+                }
+              />
+              <Bar dataKey={"price"} fill={`var(--color-${"price"})`} />
+            </BarChart>
+          </ChartContainer>
+        )}
+      </CardContent>
+    </Card>
+  );
 }

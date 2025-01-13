@@ -29,7 +29,6 @@ export const POST = async (req: NextRequest) => {
 			[
 				Query.equal('paymentMethod', EPaymentMethod.BANKING),
 				Query.equal('paymentStatus', EPaymentStatus.UNPAID),
-				Query.limit(10),
 			]
 		);
 

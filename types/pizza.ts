@@ -8,7 +8,6 @@ export enum EPizzaStockStatus {
 	LOW_STOCK = 'LOW_STOCK',
 	OUT_OF_STOCK = 'OUT_OF_STOCK',
 	DISCONTINUED = 'DISCONTINUED',
-	HOT_TREND = 'HOT_TREND',
 }
 
 export interface IPizza {

@@ -40,15 +40,17 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/lib/stores/use-auth-store";
 import { currency, DEFAULT_CUSTOM_PRICE } from "@/shared/constants";
 
+// Form schema
 const formSchema = z.object({
-  name: z.string({ message: "Vui lòng nhập tên Pizza" }),
-  description: z.string({ message: "Vui lòng nhập mô tả" }),
+  name: z.string({ message: "Pizza Name" }),
+  description: z.string({ message: "Description" }),
   toppings: z
-    .array(z.string({ message: "Vui lòng chọn nguyên liệu" }))
-    .nonempty("Vui lòng chọn ít nhất 1 loại nguyên liệu"),
+    .array(z.string({ message: "Choose your toppings" }))
+    .nonempty("Choose at least 1 topping"),
   images: z.string().optional(),
 });
 
+//  BuildNowForm component
 export default function BuildNowForm() {
   const [toppings, setToppings] = useState<ITopping[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +69,7 @@ export default function BuildNowForm() {
       setToppings(toppingData);
     } catch (error) {
       console.log(error);
-      toast.error("Có lỗi xảy ra khi lấy dữ liệu Topping!");
+      toast.error("Something went wrong!");
     }
   };
 
@@ -97,7 +99,7 @@ export default function BuildNowForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (files && files.length === 0)
-      return toast.error("Vui lý chọn tải lên ít nhất 1 ảnh");
+      return toast.error("Please upload image for your pizza");
     setIsLoading(true);
     try {
       const newToppings = toppings.filter((topping) =>
@@ -118,7 +120,7 @@ export default function BuildNowForm() {
         user!
       );
 
-      toast.success("Đã tạo Pizza của bạn, vui lòng thanh toán!");
+      toast.success("Successfully build!");
       setIds([...ids, $id]);
       setQrCode({ cartId: $id, price });
     } catch (error) {

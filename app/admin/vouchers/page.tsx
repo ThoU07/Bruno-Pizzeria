@@ -124,7 +124,7 @@ export default function Page() {
               )}
               Status
             </TableHead>
-            <TableHead className="text-center font-semibold">Mã</TableHead>
+            <TableHead className="text-center font-semibold">Code</TableHead>
             <TableHead className="text-center font-semibold">Name</TableHead>
 
             <TableHead className="text-center font-semibold">Value</TableHead>
